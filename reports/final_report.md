@@ -36,3 +36,28 @@ Work was done using a huge variety of software. Some part was done locally on my
 When I trained GPT2, I fit VRAM PERFECTLY: I had 31MB free out of 16GB :) It would be a shame if some random allocation would end up failing the training process...
 
 I tested inference on CPU and it works OK (not very fast, but still, I could manage to compute some metrics).
+
+# Evaluation
+
+Both the GPT-2 and T5 models exhibit impressive learning capabilities, achieving excellent performance after just one epoch.
+
+To present the results, let's establish an evaluation technique. Recent research has emphasized the need to replace traditional evaluation metrics used for NLP models with more comprehensive approaches that involve tasks like classification, similarity evaluation, and others specifically designed for transformer training. In accordance with this, I have opted to utilize the high-performing toxification classifier model provided by https://github.com/unitaryai/detoxify. This model will assist in evaluating the performance of both GPT-2 and T5.
+
+Naturally, I did not conduct the detoxification evaluation based on the training dataset, so I decided to use the one from https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge. I predicted detoxified versions using both models and assessed the toxicity using Detoxify.
+
+# Results
+
+![alt text](img/toxicity_comment_class_historgam.png)
+![alt text](img/toxicity_levels_scatter.png)
+![alt text](img/avg_toxicity.png)
+
+
+The GPT model had a higher toxic prediction rate than the original text in 56.0% of cases. The T5 model had a higher toxic prediction rate than the original text in 28.666666666666668% of cases.
+
+When I measured the performance for 200 samples, the results improved (30% and 14% respectively). The dataset used for evaluation contained a greater number of special symbols and languages compared to the initial dataset. Therefore, it is crucial to expand the evaluation sampling and utilize other datasets.
+
+
+# Problems
+
+There was an issue with Detoxify as it required an older version of "transformers" than my models. Consequently, the predictions and evaluations were separated into two notebooks: 3.0 and 2.2.
+
